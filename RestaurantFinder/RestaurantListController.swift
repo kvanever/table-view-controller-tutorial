@@ -10,8 +10,7 @@ import UIKit
 
 class RestaurantListController: UITableViewController {
     
-    
-    var coordinate: Coordinate?
+    let coordinate = Coordinate(latitude: 45.5505939, longitude: -122.69749)
     let foursquareClient = FoursquareClient(clientID: "BASIYY5STZI0U3C0EWGAASR4MFYU10BSF5P1NK4LCZECELY0", clientSecret: "YRPQKN4Y4TICTQZ3N3AKG0ERQEZX3K3BKDSX1ECMDWLW2UGP")
     let manager = LocationManager()
     
@@ -25,22 +24,14 @@ class RestaurantListController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        manager.getPermission()
-        manager.onLocationFix = { [weak self] coordinate in
-            
-            self?.coordinate = coordinate
-            
-            self?.foursquareClient.fetchRestaurantsFor(coordinate, category: .Food(nil)) { result in
-                switch result {
-                case .Success(let venues):
-                    self?.venues = venues
-                case .Failure(let error):
-                    print(error)
-                }
+        foursquareClient.fetchRestaurantsFor(coordinate, category: .Food(nil)) { result in
+            switch result {
+            case .Success(let venues):
+                self.venues = venues
+            case .Failure(let error):
+                print(error)
             }
         }
-        
-
     }
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
@@ -96,7 +87,7 @@ class RestaurantListController: UITableViewController {
     
     @IBAction func refreshRestaurantData(sender: AnyObject) {
         
-        if let coordinate = coordinate {
+   
             foursquareClient.fetchRestaurantsFor(coordinate, category: .Food(nil)) { result in
                 switch result {
                 case .Success(let venues):
@@ -104,7 +95,7 @@ class RestaurantListController: UITableViewController {
                 case .Failure(let error):
                     print(error)
                 }
-            }
+            
 
         }
         
