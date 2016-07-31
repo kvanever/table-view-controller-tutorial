@@ -13,6 +13,12 @@ class RestaurantListController: UITableViewController {
     let coordinate = Coordinate(latitude: 40.759106, longitude:  -73.985185)
     let foursquareClient = FoursquareClient(clientID: "BASIYY5STZI0U3C0EWGAASR4MFYU10BSF5P1NK4LCZECELY0", clientSecret: "YRPQKN4Y4TICTQZ3N3AKG0ERQEZX3K3BKDSX1ECMDWLW2UGP")
 
+    var venues: [Venue] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -20,7 +26,7 @@ class RestaurantListController: UITableViewController {
         foursquareClient.fetchRestaurantsFor(coordinate, category: .Food(nil)) { result in
             switch result {
             case .Success(let venues):
-                print(venues)
+                self.venues = venues
             case .Failure(let error):
                 print(error)
             }
@@ -55,12 +61,15 @@ class RestaurantListController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return venues.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-
+        
+        let venue = venues[indexPath.row]
+        cell.textLabel?.text = venue.name
+        
         return cell
     }
 
