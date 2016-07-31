@@ -118,5 +118,32 @@ extension APIClient {
         
         task.resume()
     }
+    
+    func fetch<T: JSONDecodable>(endpoint: Endpoint, parse:JSON -> [T]?, completion: APIResult<[T]> -> Void) {
+        
+        let request = endpoint.request
+        
+        let task = JSONTaskWithRequest(request) { json, response, error in
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                guard let json = json else {
+                    if let error = error {
+                        completion(.Failure(error))
+                    } else {
+                        // TODO: Implement error handling
+                    }
+                    return
+                }
+                
+                if let resource = parse(json) {
+                    completion(.Success(resource))
+                } else {
+                    let error = NSError(domain: KVENetworkingErrorDomain, code: UnexpectedResponseError, userInfo: nil)
+                    completion(.Failure(error))
+                }
+            }
+        }
+
+    }
 }
 
