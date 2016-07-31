@@ -8,7 +8,7 @@
 
 import Foundation
 
-public let TRENetworkingErrorDomain = "com.treehouse.Stormy.NetworkingError"
+public let KVENetworkingErrorDomain = "com.kevinvanevery.RestaurantFinder.NetworkingError"
 
 public let MissingHTTPResponseError: Int = 10
 public let UnexpectedResponseError: Int = 20
@@ -18,9 +18,30 @@ protocol JSONDecodable {
 }
 
 protocol Endpoint {
-    var baseURL: NSURL { get }
+    var baseURL: String { get }
     var path: String { get }
-    var request: NSURLRequest { get }
+    var parameters: [String: AnyObject] { get }
+}
+
+extension Endpoint {
+    var queryComponents: [NSURLQueryItem] {
+        var components = [NSURLQueryItem]()
+        
+        for (key, value) in parameters {
+            let queryItem = NSURLQueryItem(name: key, value: "\(value)")
+            components.append(queryItem)
+        }
+        return components
+    }
+    
+    var request: NSURLRequest {
+        let components = NSURLComponents(string: baseURL)!
+        components.path = path
+        components.queryItems = queryComponents
+        
+        let url = components.URL!
+        return NSURLRequest(URL: url)
+    }
 }
 
 typealias JSON = [String: AnyObject]
@@ -46,7 +67,7 @@ extension APIClient {
             
             guard let HTTPResponse = response as? NSHTTPURLResponse else {
                 let userInfo = [NSLocalizedDescriptionKey: NSLocalizedString("Missing HTTP Response", comment: "")]
-                let error = NSError(domain: TRENetworkingErrorDomain, code: MissingHTTPResponseError, userInfo: userInfo)
+                let error = NSError(domain: KVENetworkingErrorDomain, code: MissingHTTPResponseError, userInfo: userInfo)
                 completion(nil, nil, error)
                 return
             }
@@ -89,7 +110,7 @@ extension APIClient {
                 if let resource = parse(json) {
                     completion(.Success(resource))
                 } else {
-                    let error = NSError(domain: TRENetworkingErrorDomain, code: UnexpectedResponseError, userInfo: nil)
+                    let error = NSError(domain: KVENetworkingErrorDomain, code: UnexpectedResponseError, userInfo: nil)
                     completion(.Failure(error))
                 }
             }
