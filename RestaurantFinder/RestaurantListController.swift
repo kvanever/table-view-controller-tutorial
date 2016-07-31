@@ -12,7 +12,8 @@ class RestaurantListController: UITableViewController {
     
     let coordinate = Coordinate(latitude: 40.759106, longitude:  -73.985185)
     let foursquareClient = FoursquareClient(clientID: "BASIYY5STZI0U3C0EWGAASR4MFYU10BSF5P1NK4LCZECELY0", clientSecret: "YRPQKN4Y4TICTQZ3N3AKG0ERQEZX3K3BKDSX1ECMDWLW2UGP")
-
+    let manager = LocationManager()
+    
     var venues: [Venue] = [] {
         didSet {
             tableView.reloadData()
@@ -23,6 +24,7 @@ class RestaurantListController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        manager.getPermission()
         foursquareClient.fetchRestaurantsFor(coordinate, category: .Food(nil)) { result in
             switch result {
             case .Success(let venues):

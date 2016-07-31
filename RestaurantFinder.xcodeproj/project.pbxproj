@@ -17,6 +17,7 @@
 		CD3D91331D4D95EA00FED44D /* FoursquareClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3D91321D4D95EA00FED44D /* FoursquareClient.swift */; };
 		CD3D91351D4D966000FED44D /* FoursquareModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3D91341D4D966000FED44D /* FoursquareModels.swift */; };
 		CD58EF5D1D4E8D57006F579F /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD58EF5C1D4E8D57006F579F /* RestaurantCell.swift */; };
+		CDE345E71D4E98C400F1A2CA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE345E61D4E98C400F1A2CA /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		CD3D91321D4D95EA00FED44D /* FoursquareClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoursquareClient.swift; sourceTree = "<group>"; };
 		CD3D91341D4D966000FED44D /* FoursquareModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoursquareModels.swift; sourceTree = "<group>"; };
 		CD58EF5C1D4E8D57006F579F /* RestaurantCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
+		CDE345E61D4E98C400F1A2CA /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				CD3D91321D4D95EA00FED44D /* FoursquareClient.swift */,
 				CD3D91341D4D966000FED44D /* FoursquareModels.swift */,
 				CD58EF5C1D4E8D57006F579F /* RestaurantCell.swift */,
+				CDE345E61D4E98C400F1A2CA /* LocationManager.swift */,
 			);
 			path = RestaurantFinder;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 				9724C68F1CDAA25B00269D61 /* DetailViewController.swift in Sources */,
 				9724C68D1CDAA25B00269D61 /* RestaurantListController.swift in Sources */,
 				CD58EF5D1D4E8D57006F579F /* RestaurantCell.swift in Sources */,
+				CDE345E71D4E98C400F1A2CA /* LocationManager.swift in Sources */,
 				CD3D91331D4D95EA00FED44D /* FoursquareClient.swift in Sources */,
 				9724C68B1CDAA25B00269D61 /* AppDelegate.swift in Sources */,
 				9724C69F1CDAA27B00269D61 /* APIClient.swift in Sources */,
