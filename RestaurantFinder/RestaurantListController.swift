@@ -48,6 +48,10 @@ class RestaurantListController: UITableViewController {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
+                
+                let venue = venues[indexPath.row]
+                controller.venue = venue
+                
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -65,10 +69,12 @@ class RestaurantListController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("RestaurantCell", forIndexPath: indexPath) as! RestaurantCell
         
         let venue = venues[indexPath.row]
-        cell.textLabel?.text = venue.name
+        cell.restaurantTitleLabel?.text = venue.name
+        cell.restaurantCheckinCountLabel?.text = venue.checkins.description
+        cell.restaurantCategoryLabel?.text = venue.categoryName
         
         return cell
     }
@@ -77,6 +83,22 @@ class RestaurantListController: UITableViewController {
         // Return false if you do not want the specified item to be editable.
         return true
     }
+    
+    @IBAction func refreshRestaurantData(sender: AnyObject) {
+        
+        foursquareClient.fetchRestaurantsFor(coordinate, category: .Food(nil)) { result in
+            switch result {
+            case .Success(let venues):
+                self.venues = venues
+            case .Failure(let error):
+                print(error)
+            }
+        }
+        
+        refreshControl?.endRefreshing()
+        
+    }
+    
 
 }
 
