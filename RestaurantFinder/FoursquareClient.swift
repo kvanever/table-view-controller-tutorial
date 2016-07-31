@@ -42,7 +42,7 @@ enum Foursquare: Endpoint{
         
         var path: String {
             switch self {
-                case .Search: return "/v2/venuses/search"
+                case .Search: return "/v2/venues/search"
             }
         }
         
