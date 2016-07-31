@@ -143,7 +143,7 @@ extension APIClient {
                 }
             }
         }
-
+        task.resume()
     }
 }
 

@@ -117,3 +117,34 @@ enum Foursquare: Endpoint{
         }
     }
 }
+
+final class FoursquareClient: APIClient {
+    let configuration: NSURLSessionConfiguration
+    
+    lazy var session: NSURLSession = {
+        return NSURLSession(configuration: self.configuration)
+    }()
+    
+    let clientID: String
+    let clientSecret: String
+    
+    init(configuration: NSURLSessionConfiguration, clientID: String, clientSecret: String) {
+        self.configuration = configuration
+        self.clientID = clientID
+        self.clientSecret = clientSecret
+    }
+    
+    convenience init(clientID: String, clientSecret: String) {
+        self.init(configuration: .defaultSessionConfiguration(), clientID:  clientID, clientSecret:  clientSecret)
+    }
+    
+    func fetchRestaurantsFor(
+    location: Coordinate,
+    category: Foursquare.VenueEndpoint.Category = Foursquare.VenueEndpoint.Category.Food(nil),
+    query: String? = nil,
+    searchRadius: Int? = nil,
+    limit: Int? = nil,
+    completion: APIResult<[Venue]> -> Void) {
+        
+    }
+}
