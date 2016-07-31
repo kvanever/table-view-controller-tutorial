@@ -23,6 +23,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     override init() {
         super.init()
         manager.delegate = self
+        manager.requestLocation()
     }
     
     func getPermission() {
